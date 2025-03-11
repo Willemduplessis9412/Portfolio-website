@@ -78,6 +78,9 @@ img {
     list-style: none;
 }
 
+h2{
+    Text-align: center;
+}
 /* Contact Section */
 #contact {
     text-align: center;
