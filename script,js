@@ -1,0 +1,75 @@
+document.addEventListener("DOMContentLoaded", function () {
+    // Toggle navigation menu
+    const menuToggle = document.getElementById("menu-toggle");
+    const navMenu = document.querySelector("nav ul");
+
+    menuToggle.addEventListener("click", function () {
+        navMenu.classList.toggle("show");
+    });
+
+    // Smooth scrolling for navigation links
+    document.querySelectorAll("nav ul li a").forEach(anchor => {
+        anchor.addEventListener("click", function (event) {
+            event.preventDefault();
+            const sectionId = this.getAttribute("href");
+            document.querySelector(sectionId).scrollIntoView({
+                behavior: "smooth"
+            });
+        });
+    });
+
+    // Filter projects by category
+    function filterProjects(category) {
+        const projects = document.querySelectorAll(".project-item");
+        projects.forEach(project => {
+            if (category === "all" || project.classList.contains(category)) {
+                project.style.display = "block";
+            } else {
+                project.style.display = "none";
+            }
+        });
+    }
+    
+    document.querySelectorAll(".filter-btn").forEach(button => {
+        button.addEventListener("click", function () {
+            filterProjects(this.dataset.category);
+        });
+    });
+
+    // Lightbox effect for project images
+    const lightbox = document.getElementById("lightbox");
+    const lightboxImg = document.getElementById("lightbox-img");
+
+    document.querySelectorAll(".project-item img").forEach(img => {
+        img.addEventListener("click", function () {
+            lightbox.style.display = "flex";
+            lightboxImg.src = this.src;
+        });
+    });
+    
+    lightbox.addEventListener("click", function () {
+        lightbox.style.display = "none";
+    });
+
+    // Form validation
+    document.getElementById("contact-form").addEventListener("submit", function (event) {
+        event.preventDefault();
+        
+        const name = document.getElementById("name").value.trim();
+        const email = document.getElementById("email").value.trim();
+        const message = document.getElementById("message").value.trim();
+        
+        if (!name || !email || !message) {
+            alert("Please fill in all fields.");
+            return;
+        }
+        
+        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+            alert("Please enter a valid email address.");
+            return;
+        }
+        
+        alert("Message sent successfully!");
+        this.reset();
+    });
+});
